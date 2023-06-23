@@ -2,7 +2,6 @@ from pdf2image import convert_from_path
 from PIL import Image
 import math
 from fpdf import FPDF
-import os
 
 Image.MAX_IMAGE_PIXELS = None  # Entfernt die Begrenzung
 
@@ -65,17 +64,17 @@ def split_pdf_into_a4(path, scale_factor):
                 pdf.image("temp.jpg", 0, 0)
 
                 # Speichern Sie die PDF-Seite
-                pdf_name = f"{os.path.splitext(path)[0]}_page_{i}_part_{row}_{col}.pdf"
+                pdf_name = f"{path.split('.')[0]}_page_{i}_part_{row}_{col}.pdf"
                 pdf.output(pdf_name, "F")
 
-# Fragt den Benutzer nach dem Namen und dem Pfad der Datei
-file_name = input("Bitte geben Sie den Namen der PDF-Datei ein (ohne .pdf): ")
-file_path = input("Bitte geben Sie den Pfad zur Datei an, falls sie sich nicht im gleichen Verzeichnis befindet. Andernfalls drücken Sie einfach Enter: ")
-pdf_path = os.path.join(file_path, file_name + ".pdf")
 
-# Fragt den Benutzer nach dem Skalierungsfaktor
+# Pfad zur PDF-Datei
+pdf_path = 'PV1.pdf'
+
+# Frage den Benutzer nach dem Skalierungsfaktor
 scale_factor = input("Bitte geben Sie den Skalierungsfaktor ein (z.B. 0.36 für 36%): ")
 scale_factor = float(scale_factor)
 
 # Teilen Sie die PDF-Datei
 split_pdf_into_a4(pdf_path, scale_factor)
+
