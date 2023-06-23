@@ -12,17 +12,25 @@ def is_white(pixel):
 
 def should_skip_page(image):
     width, height = image.size
-    border_offset_mm = 5
-    border_offset_pixels = int((border_offset_mm / 25.4) * 300)  # convert mm to pixels
+    border_width_mm = 5
+    border_width_pixels = int((border_width_mm / 25.4) * 300)  # convert mm to pixels
+    white_pixels = 0
+    total_pixels = 0
 
-    # Überprüfen, ob der Rest des Bildes außerhalb des 5-mm-Offsets weiß ist
-    for x in range(border_offset_pixels, width):
-        for y in range(border_offset_pixels, height):
+    # loop over pixels in image
+    for x in range(border_width_pixels, width):  # Start from 5mm offset from left
+        for y in range(border_width_pixels, height):  # Start from 5mm offset from top
             pixel = image.getpixel((x, y))
-            if not is_white(pixel):
-                return False
+            if is_white(pixel):
+                white_pixels += 1
+            total_pixels += 1
 
-    return True
+    # if all the pixels are white, skip this page
+    if total_pixels > 0 and white_pixels / total_pixels == 1.0:
+        return True
+
+    return False
+
 
 
 def split_pdf_into_a4(path, scale_factor):
