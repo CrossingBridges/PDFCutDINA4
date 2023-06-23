@@ -74,8 +74,7 @@ file_path = input("Bitte geben Sie den Pfad zur Datei an, falls sie sich nicht i
 pdf_path = os.path.join(file_path, file_name + ".pdf")
 
 # Fragt den Benutzer nach dem Skalierungsfaktor
-scale_factor = input("Bitte geben Sie den Skalierungsfaktor ein (z.B. 0.36 für 36%): ")
-scale_factor = float(scale_factor)
-
+scale_percent = input("Bitte geben Sie den Skalierungsfaktor in Prozent ein (z.B. 36 für 36%): ")
+scale_factor = float("0." + scale_percent)
 # Teilen Sie die PDF-Datei
 split_pdf_into_a4(pdf_path, scale_factor)
